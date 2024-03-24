@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .drop-zone {
+        border: 1px dashed #ccc;
+        padding: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>remove background</h1>
+
+    <div
+      class="drop-zone"
+      id="dropZone"
+    >
+      <p>Drop files here</p>
+
+      <form
+        action="/"
+        enctype="multipart/form-data"
+        method="post"
+        id="uploadForm"
+      >
+        <input
+          type="file"
+          id="fileInput"
+          name="image_file"
+        />
+        <input
+          type="submit"
+          value="remove"
+        />
+      </form>
+    </div>
+
+    <script>
+      let dropZone = document.getElementById("dropZone");
+      let fileInput = document.getElementById("fileInput");
+
+      dropZone.addEventListener("click", function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+          uploadForm.submit();
+        }
+      });
+    </script>
+  </body>
+</html>
