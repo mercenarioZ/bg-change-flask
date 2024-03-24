@@ -49,3 +49,4 @@ tifffile==2024.2.12
 tqdm==4.66.2
 urllib3==2.2.1
 Werkzeug==3.0.1
+gunicorn==19.7.1
