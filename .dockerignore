@@ -1,0 +1,11 @@
+# Files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Directories
+myenv/
+.env
+.vscode/
+.git/
