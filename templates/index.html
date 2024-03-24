@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Document</title>
+    <title>bgChanging</title>
 
     <style>
       body {
@@ -19,20 +19,53 @@
         flex-direction: column;
       }
 
-      .drop-zone {
-        border: 1px dashed #ccc;
-        padding: 3rem;
+      .drop-area {
+        border: 2px dashed #ccc;
+        padding: 5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #removeButton {
+        display: none;
+      }
+
+      .title {
+        margin-bottom: 0.1rem;
+      }
+
+      .subtitle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .kidding {
+        margin: 0 0 0.9rem 0;
+        opacity: 65%;
+        font-size: 0.9rem;
       }
     </style>
   </head>
   <body>
-    <h1>remove background</h1>
-
+    <h1 class="title">remove old suck background, add new white one</h1>
+    <div class="subtitle">
+      <p>
+        this site helps prevent Grape Pear (Le Nhi) from asking for help
+        changing the background to white to make ID card photo.
+      </p>
+      <p class="kidding">jk, ask anytime 😜</p>
+    </div>
     <div
-      class="drop-zone"
-      id="dropZone"
+      class="drop-area"
+      id="dropArea"
     >
-      <p>Drop files here</p>
+      <p>Drop file here</p>
 
       <form
         action="/"
@@ -46,17 +79,26 @@
           name="image_file"
         />
         <input
+          id="removeButton"
           type="submit"
           value="remove"
         />
       </form>
     </div>
 
-    <script>
-      let dropZone = document.getElementById("dropZone");
-      let fileInput = document.getElementById("fileInput");
+    <p>
+      <i>
+        this website's UI sucks so bad, but don't be concerned, it's doesn't
+        matter, matter is "vấn đề"
+      </i>
+    </p>
 
-      dropZone.addEventListener("click", function (event) {
+    <script>
+      let dropArea = document.getElementById("dropArea");
+      let fileInput = document.getElementById("fileInput");
+      let uploadForm = document.getElementById("uploadForm");
+
+      dropArea.addEventListener("click", function (event) {
         if (event.target == fileInput) return;
         fileInput.click();
       });
@@ -65,6 +107,22 @@
         if (fileInput.files.length > 0) {
           uploadForm.submit();
         }
+      });
+
+      dropArea.addEventListener("dragover", function (event) {
+        event.preventDefault();
+        dropArea.style.backgroundColor = "#f1f1f1";
+      });
+
+      dropArea.addEventListener("dragleave", function () {
+        dropArea.style.backgroundColor = "white";
+      });
+
+      dropArea.addEventListener("drop", function (event) {
+        event.preventDefault();
+        dropArea.style.backgroundColor = "white";
+        fileInput.files = event.dataTransfer.files;
+        uploadForm.submit();
       });
     </script>
   </body>
