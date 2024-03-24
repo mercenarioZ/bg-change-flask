@@ -56,7 +56,8 @@
       let dropZone = document.getElementById("dropZone");
       let fileInput = document.getElementById("fileInput");
 
-      dropZone.addEventListener("click", function () {
+      dropZone.addEventListener("click", function (event) {
+        if (event.target == fileInput) return;
         fileInput.click();
       });
 
