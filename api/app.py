@@ -1,7 +1,7 @@
 from flask import Flask, request, send_file, render_template, render_template_string
 from io import BytesIO
 from werkzeug.utils import secure_filename
-from remove_bg import add_white_bg
+from api.remove_bg import add_white_bg
 import os
 
 app = Flask(__name__)
