@@ -1,8 +1,8 @@
 from flask import Flask, request, send_file, render_template, render_template_string
 from io import BytesIO
 from werkzeug.utils import secure_filename
-from api.remove_bg import add_white_bg
-import os
+from remove_bg import add_white_bg
+import tempfile
 
 app = Flask(__name__)
 
@@ -35,22 +35,22 @@ def image_process():
 
             try:
                 # save the image to the temp folder
-                temp_path = os.path.join(app.root_path, "tmp")
-                os.makedirs(temp_path, exist_ok=True)
-                image_file.save(f"tmp/{filename}")
+                temp_file = tempfile.NamedTemporaryFile(delete=True)
+                temp_file_path = temp_file.name
+                temp_file.close()
 
-                # get the path of the image
-                image_file = f"tmp/{filename}"
+                # save the image to the temp file
+                image_file.save(temp_file_path)
 
-                processed_img = add_white_bg(image_file)
+                processed_img = add_white_bg(temp_file_path)
 
                 # remove the temp image
-                os.remove(image_file)
+                # os.remove(image_file)
 
                 return send_file(BytesIO(processed_img), mimetype="image/png", as_attachment=True, download_name="processed-img.png")
             except Exception as e:
                 return str(e), 500
-            
+
     return render_template("index.html")
 
 
