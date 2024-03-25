@@ -35,19 +35,19 @@ def image_process():
 
             try:
                 # save the image to the temp folder
-                temp_path = os.path.join(app.root_path, "temp")
+                temp_path = os.path.join(app.root_path, "tmp")
                 os.makedirs(temp_path, exist_ok=True)
-                image_file.save(f"temp/{filename}")
+                image_file.save(f"tmp/{filename}")
 
                 # get the path of the image
-                image_file = f"temp/{filename}"
+                image_file = f"tmp/{filename}"
 
                 processed_img = add_white_bg(image_file)
 
                 # remove the temp image
                 os.remove(image_file)
 
-                return send_file(BytesIO(processed_img), mimetype="image/png", as_attachment=True, download_name="processed_image.png")
+                return send_file(BytesIO(processed_img), mimetype="image/png", as_attachment=True, download_name="processed-img.png")
             except Exception as e:
                 return str(e), 500
             
