@@ -49,11 +49,7 @@ def image_process():
 
                 return send_file(BytesIO(processed_img), mimetype="image/png", as_attachment=True, download_name="processed_image.png")
             except Exception as e:
-                return render_template_string('''
-                    <h1>Error processing image</h1>
-                    <p>An error occurred while processing the image. Please try again.</p>
-                    <a href="/">Go back</a>
-                '''), 500
+                return str(e), 500
             
     return render_template("index.html")
 
