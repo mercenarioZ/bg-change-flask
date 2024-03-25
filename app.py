@@ -1,7 +1,8 @@
 from flask import Flask, request, send_file, render_template, render_template_string
-from script import remove_background
 from io import BytesIO
 from werkzeug.utils import secure_filename
+from remove_bg import add_white_bg
+import os
 
 app = Flask(__name__)
 
@@ -33,10 +34,27 @@ def image_process():
                 '''), 400
 
             try:
-                processed_img = remove_background(image_file)
+                # save the image to the temp folder
+                temp_path = os.path.join(app.root_path, "temp")
+                os.makedirs(temp_path, exist_ok=True)
+                image_file.save(f"temp/{filename}")
+
+                # get the path of the image
+                image_file = f"temp/{filename}"
+
+                processed_img = add_white_bg(image_file)
+
+                # remove the temp image
+                os.remove(image_file)
+
                 return send_file(BytesIO(processed_img), mimetype="image/png", as_attachment=True, download_name="processed_image.png")
             except Exception as e:
-                return str(e), 500
+                return render_template_string('''
+                    <h1>Error processing image</h1>
+                    <p>An error occurred while processing the image. Please try again.</p>
+                    <a href="/">Go back</a>
+                '''), 500
+            
     return render_template("index.html")
 
 
